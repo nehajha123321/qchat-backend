@@ -17,7 +17,7 @@ const _config: AppConfig = {
     APPRUNNER_GITHUB_BRANCH_MAIN: 'main',
     APPRUNNER_GITHUB_BRANCH_SANDBOX: 'polly-integration',
     APPRUNNER_GITHUB_CONNECTION_ARN: 'arn:aws:apprunner:ap-south-1:717937492408:connection/AppRunner-Github/a0c93386c8d549d3a906990c118db658',
-    KENDRA_INDEXID: "2786d8bd-676a-4c34-bda0-a1cea0832c29",
+    KENDRA_INDEXID: "a91c1b65-2547-47cc-b9c0-ab0dad8a58b0",
     CHAT_PROD_API: "https://chat.cloudevangelist.in?bedrockEngine=true&token=",
 };
 
