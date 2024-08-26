@@ -1,0 +1,41 @@
+Backlog: 
+1. View Conversation List
+- Show link to open a new page with list of chat history. 
+- Load all the conversations by Date
+- Click a date to show the conversation. 
+
+
+
+'## Key Requirements: 
+
+1. BLUF: A plug and play Chatbot that can be inserted in any website using TamperMonkey script for quick demo. 
+
+2. User Experience: 
+ - Login to the admin site, fill out a simple form with details:
+    - customer name
+    - customer website to crawl
+    - name of Chatbot
+    - PDF files to be indexed
+    - email id
+ - User will receive an email with link to tampermonkey script that they can install and start using the chatbot in customer site for demo. 
+
+ 3. For each form, do the following: 
+    - Index the uploaded docs, crawl the website as a new data source in Amazon Q
+    - Once successfully indexed, create a token for accessing the api endpoint for user. 
+
+4. Create a Lambda based API to converse with Amazon Q backend with filter as defined in token.
+
+Create a Step function: 
+ 1. Create new Request
+ 2. Create AmazonQ Application
+ 3. Initiate One-time Indexing (frequency)
+ 4. Generate Token and Greesemonkey script
+ 5. Send email notification
+
+
+'
+
+## Reference: 
+
+
+

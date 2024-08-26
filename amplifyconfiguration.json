@@ -1,0 +1,983 @@
+{
+  "aws_project_region": "ap-south-1",
+  "aws_user_pools_id": "ap-south-1_thbPhVc0Y",
+  "aws_cognito_region": "ap-south-1",
+  "aws_user_pools_web_client_id": "5uggl9e66rpduqbouupfb61g88",
+  "aws_cognito_identity_pool_id": "ap-south-1:e0e5aa04-eae6-47b5-8ba4-dac8bb1bcc69",
+  "allowUnauthenticatedIdentities": "true",
+  "aws_cognito_signup_attributes": [
+    "EMAIL"
+  ],
+  "aws_cognito_username_attributes": [
+    "EMAIL"
+  ],
+  "aws_cognito_verification_mechanisms": [
+    "EMAIL"
+  ],
+  "aws_cognito_password_protection_settings": {
+    "passwordPolicyMinLength": 8,
+    "passwordPolicyCharacters": [
+      "REQUIRES_NUMBERS",
+      "REQUIRES_LOWERCASE",
+      "REQUIRES_UPPERCASE",
+      "REQUIRES_SYMBOLS"
+    ]
+  },
+  "aws_appsync_graphqlEndpoint": "https://ajatld5p4rhajlp4pf7tdfcz7e.appsync-api.ap-south-1.amazonaws.com/graphql",
+  "aws_appsync_region": "ap-south-1",
+  "aws_appsync_authenticationType": "AMAZON_COGNITO_USER_POOLS",
+  "aws_appsync_additionalAuthenticationTypes": "AWS_IAM",
+  "modelIntrospection": {
+    "version": 1,
+    "models": {
+      "Todo": {
+        "name": "Todo",
+        "fields": {
+          "id": {
+            "name": "id",
+            "isArray": false,
+            "type": "ID",
+            "isRequired": true,
+            "attributes": []
+          },
+          "content": {
+            "name": "content",
+            "isArray": false,
+            "type": "String",
+            "isRequired": false,
+            "attributes": []
+          },
+          "done": {
+            "name": "done",
+            "isArray": false,
+            "type": "Boolean",
+            "isRequired": false,
+            "attributes": []
+          },
+          "priority": {
+            "name": "priority",
+            "isArray": false,
+            "type": {
+              "enum": "Priority"
+            },
+            "isRequired": false,
+            "attributes": []
+          },
+          "createdAt": {
+            "name": "createdAt",
+            "isArray": false,
+            "type": "AWSDateTime",
+            "isRequired": true,
+            "attributes": []
+          },
+          "updatedAt": {
+            "name": "updatedAt",
+            "isArray": false,
+            "type": "AWSDateTime",
+            "isRequired": true,
+            "attributes": []
+          }
+        },
+        "syncable": true,
+        "pluralName": "Todos",
+        "attributes": [
+          {
+            "type": "model",
+            "properties": {}
+          },
+          {
+            "type": "key",
+            "properties": {
+              "fields": [
+                "id"
+              ]
+            }
+          },
+          {
+            "type": "auth",
+            "properties": {
+              "rules": [
+                {
+                  "allow": "private",
+                  "operations": [
+                    "create",
+                    "update",
+                    "delete",
+                    "read"
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "primaryKeyInfo": {
+          "isCustomPrimaryKey": false,
+          "primaryKeyFieldName": "id",
+          "sortKeyFieldNames": []
+        }
+      },
+      "Training": {
+        "name": "Training",
+        "fields": {
+          "id": {
+            "name": "id",
+            "isArray": false,
+            "type": "ID",
+            "isRequired": true,
+            "attributes": []
+          },
+          "title": {
+            "name": "title",
+            "isArray": false,
+            "type": "String",
+            "isRequired": false,
+            "attributes": []
+          },
+          "description": {
+            "name": "description",
+            "isArray": false,
+            "type": "String",
+            "isRequired": false,
+            "attributes": []
+          },
+          "duration": {
+            "name": "duration",
+            "isArray": false,
+            "type": "String",
+            "isRequired": false,
+            "attributes": []
+          },
+          "category": {
+            "name": "category",
+            "isArray": false,
+            "type": "String",
+            "isRequired": false,
+            "attributes": []
+          },
+          "tags": {
+            "name": "tags",
+            "isArray": true,
+            "type": "String",
+            "isRequired": false,
+            "attributes": [],
+            "isArrayNullable": true
+          },
+          "createdAt": {
+            "name": "createdAt",
+            "isArray": false,
+            "type": "AWSDateTime",
+            "isRequired": true,
+            "attributes": []
+          },
+          "updatedAt": {
+            "name": "updatedAt",
+            "isArray": false,
+            "type": "AWSDateTime",
+            "isRequired": true,
+            "attributes": []
+          }
+        },
+        "syncable": true,
+        "pluralName": "Trainings",
+        "attributes": [
+          {
+            "type": "model",
+            "properties": {}
+          },
+          {
+            "type": "key",
+            "properties": {
+              "fields": [
+                "id"
+              ]
+            }
+          },
+          {
+            "type": "auth",
+            "properties": {
+              "rules": [
+                {
+                  "allow": "private",
+                  "operations": [
+                    "create",
+                    "update",
+                    "delete",
+                    "read"
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "primaryKeyInfo": {
+          "isCustomPrimaryKey": false,
+          "primaryKeyFieldName": "id",
+          "sortKeyFieldNames": []
+        }
+      },
+      "Trainer": {
+        "name": "Trainer",
+        "fields": {
+          "id": {
+            "name": "id",
+            "isArray": false,
+            "type": "ID",
+            "isRequired": true,
+            "attributes": []
+          },
+          "name": {
+            "name": "name",
+            "isArray": false,
+            "type": "String",
+            "isRequired": false,
+            "attributes": []
+          },
+          "gender": {
+            "name": "gender",
+            "isArray": false,
+            "type": "String",
+            "isRequired": false,
+            "attributes": []
+          },
+          "age": {
+            "name": "age",
+            "isArray": false,
+            "type": "Int",
+            "isRequired": false,
+            "attributes": []
+          },
+          "email": {
+            "name": "email",
+            "isArray": false,
+            "type": "String",
+            "isRequired": false,
+            "attributes": []
+          },
+          "mobile": {
+            "name": "mobile",
+            "isArray": false,
+            "type": "String",
+            "isRequired": false,
+            "attributes": []
+          },
+          "scheduleTrainerId": {
+            "name": "scheduleTrainerId",
+            "isArray": false,
+            "type": "ID",
+            "isRequired": false,
+            "attributes": []
+          },
+          "createdAt": {
+            "name": "createdAt",
+            "isArray": false,
+            "type": "AWSDateTime",
+            "isRequired": true,
+            "attributes": []
+          },
+          "updatedAt": {
+            "name": "updatedAt",
+            "isArray": false,
+            "type": "AWSDateTime",
+            "isRequired": true,
+            "attributes": []
+          }
+        },
+        "syncable": true,
+        "pluralName": "Trainers",
+        "attributes": [
+          {
+            "type": "model",
+            "properties": {}
+          },
+          {
+            "type": "key",
+            "properties": {
+              "fields": [
+                "id"
+              ]
+            }
+          },
+          {
+            "type": "key",
+            "properties": {
+              "name": "gsi-Schedule.trainer",
+              "fields": [
+                "scheduleTrainerId"
+              ]
+            }
+          },
+          {
+            "type": "auth",
+            "properties": {
+              "rules": [
+                {
+                  "allow": "private",
+                  "operations": [
+                    "create",
+                    "update",
+                    "delete",
+                    "read"
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "primaryKeyInfo": {
+          "isCustomPrimaryKey": false,
+          "primaryKeyFieldName": "id",
+          "sortKeyFieldNames": []
+        }
+      },
+      "Attendee": {
+        "name": "Attendee",
+        "fields": {
+          "id": {
+            "name": "id",
+            "isArray": false,
+            "type": "ID",
+            "isRequired": true,
+            "attributes": []
+          },
+          "name": {
+            "name": "name",
+            "isArray": false,
+            "type": "String",
+            "isRequired": false,
+            "attributes": []
+          },
+          "gender": {
+            "name": "gender",
+            "isArray": false,
+            "type": "String",
+            "isRequired": false,
+            "attributes": []
+          },
+          "age": {
+            "name": "age",
+            "isArray": false,
+            "type": "Int",
+            "isRequired": false,
+            "attributes": []
+          },
+          "email": {
+            "name": "email",
+            "isArray": false,
+            "type": "String",
+            "isRequired": false,
+            "attributes": []
+          },
+          "mobile": {
+            "name": "mobile",
+            "isArray": false,
+            "type": "String",
+            "isRequired": false,
+            "attributes": []
+          },
+          "scheduleAttendeesId": {
+            "name": "scheduleAttendeesId",
+            "isArray": false,
+            "type": "ID",
+            "isRequired": false,
+            "attributes": []
+          },
+          "createdAt": {
+            "name": "createdAt",
+            "isArray": false,
+            "type": "AWSDateTime",
+            "isRequired": true,
+            "attributes": []
+          },
+          "updatedAt": {
+            "name": "updatedAt",
+            "isArray": false,
+            "type": "AWSDateTime",
+            "isRequired": true,
+            "attributes": []
+          }
+        },
+        "syncable": true,
+        "pluralName": "Attendees",
+        "attributes": [
+          {
+            "type": "model",
+            "properties": {}
+          },
+          {
+            "type": "key",
+            "properties": {
+              "fields": [
+                "id"
+              ]
+            }
+          },
+          {
+            "type": "key",
+            "properties": {
+              "name": "gsi-Schedule.attendees",
+              "fields": [
+                "scheduleAttendeesId"
+              ]
+            }
+          },
+          {
+            "type": "auth",
+            "properties": {
+              "rules": [
+                {
+                  "allow": "private",
+                  "operations": [
+                    "create",
+                    "update",
+                    "delete",
+                    "read"
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "primaryKeyInfo": {
+          "isCustomPrimaryKey": false,
+          "primaryKeyFieldName": "id",
+          "sortKeyFieldNames": []
+        }
+      },
+      "Schedule": {
+        "name": "Schedule",
+        "fields": {
+          "id": {
+            "name": "id",
+            "isArray": false,
+            "type": "ID",
+            "isRequired": true,
+            "attributes": []
+          },
+          "training": {
+            "name": "training",
+            "isArray": false,
+            "type": {
+              "model": "Training"
+            },
+            "isRequired": false,
+            "attributes": [],
+            "association": {
+              "connectionType": "HAS_ONE",
+              "associatedWith": [
+                "id"
+              ],
+              "targetNames": [
+                "scheduleTrainingId"
+              ]
+            }
+          },
+          "trainer": {
+            "name": "trainer",
+            "isArray": true,
+            "type": {
+              "model": "Trainer"
+            },
+            "isRequired": false,
+            "attributes": [],
+            "isArrayNullable": true,
+            "association": {
+              "connectionType": "HAS_MANY",
+              "associatedWith": [
+                "scheduleTrainerId"
+              ]
+            }
+          },
+          "startdate": {
+            "name": "startdate",
+            "isArray": false,
+            "type": "AWSDate",
+            "isRequired": false,
+            "attributes": []
+          },
+          "starttime": {
+            "name": "starttime",
+            "isArray": false,
+            "type": "AWSDateTime",
+            "isRequired": false,
+            "attributes": []
+          },
+          "enddate": {
+            "name": "enddate",
+            "isArray": false,
+            "type": "AWSDate",
+            "isRequired": false,
+            "attributes": []
+          },
+          "endtime": {
+            "name": "endtime",
+            "isArray": false,
+            "type": "AWSDateTime",
+            "isRequired": false,
+            "attributes": []
+          },
+          "location": {
+            "name": "location",
+            "isArray": false,
+            "type": "String",
+            "isRequired": false,
+            "attributes": []
+          },
+          "schedule_status": {
+            "name": "schedule_status",
+            "isArray": false,
+            "type": {
+              "enum": "ScheduleStatus"
+            },
+            "isRequired": false,
+            "attributes": []
+          },
+          "attendees": {
+            "name": "attendees",
+            "isArray": true,
+            "type": {
+              "model": "Attendee"
+            },
+            "isRequired": false,
+            "attributes": [],
+            "isArrayNullable": true,
+            "association": {
+              "connectionType": "HAS_MANY",
+              "associatedWith": [
+                "scheduleAttendeesId"
+              ]
+            }
+          },
+          "scheduleTrainingId": {
+            "name": "scheduleTrainingId",
+            "isArray": false,
+            "type": "ID",
+            "isRequired": false,
+            "attributes": []
+          },
+          "createdAt": {
+            "name": "createdAt",
+            "isArray": false,
+            "type": "AWSDateTime",
+            "isRequired": true,
+            "attributes": []
+          },
+          "updatedAt": {
+            "name": "updatedAt",
+            "isArray": false,
+            "type": "AWSDateTime",
+            "isRequired": true,
+            "attributes": []
+          }
+        },
+        "syncable": true,
+        "pluralName": "Schedules",
+        "attributes": [
+          {
+            "type": "model",
+            "properties": {}
+          },
+          {
+            "type": "key",
+            "properties": {
+              "fields": [
+                "id"
+              ]
+            }
+          },
+          {
+            "type": "auth",
+            "properties": {
+              "rules": [
+                {
+                  "allow": "private",
+                  "operations": [
+                    "create",
+                    "update",
+                    "delete",
+                    "read"
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "primaryKeyInfo": {
+          "isCustomPrimaryKey": false,
+          "primaryKeyFieldName": "id",
+          "sortKeyFieldNames": []
+        }
+      },
+      "Registration": {
+        "name": "Registration",
+        "fields": {
+          "id": {
+            "name": "id",
+            "isArray": false,
+            "type": "ID",
+            "isRequired": true,
+            "attributes": []
+          },
+          "attendee": {
+            "name": "attendee",
+            "isArray": false,
+            "type": {
+              "model": "Attendee"
+            },
+            "isRequired": false,
+            "attributes": [],
+            "association": {
+              "connectionType": "HAS_ONE",
+              "associatedWith": [
+                "id"
+              ],
+              "targetNames": [
+                "registrationAttendeeId"
+              ]
+            }
+          },
+          "schedule": {
+            "name": "schedule",
+            "isArray": false,
+            "type": {
+              "model": "Schedule"
+            },
+            "isRequired": false,
+            "attributes": [],
+            "association": {
+              "connectionType": "HAS_ONE",
+              "associatedWith": [
+                "id"
+              ],
+              "targetNames": [
+                "registrationScheduleId"
+              ]
+            }
+          },
+          "registration_status": {
+            "name": "registration_status",
+            "isArray": false,
+            "type": {
+              "enum": "RegistrationStatus"
+            },
+            "isRequired": false,
+            "attributes": []
+          },
+          "registrationAttendeeId": {
+            "name": "registrationAttendeeId",
+            "isArray": false,
+            "type": "ID",
+            "isRequired": false,
+            "attributes": []
+          },
+          "registrationScheduleId": {
+            "name": "registrationScheduleId",
+            "isArray": false,
+            "type": "ID",
+            "isRequired": false,
+            "attributes": []
+          },
+          "createdAt": {
+            "name": "createdAt",
+            "isArray": false,
+            "type": "AWSDateTime",
+            "isRequired": true,
+            "attributes": []
+          },
+          "updatedAt": {
+            "name": "updatedAt",
+            "isArray": false,
+            "type": "AWSDateTime",
+            "isRequired": true,
+            "attributes": []
+          }
+        },
+        "syncable": true,
+        "pluralName": "Registrations",
+        "attributes": [
+          {
+            "type": "model",
+            "properties": {}
+          },
+          {
+            "type": "key",
+            "properties": {
+              "fields": [
+                "id"
+              ]
+            }
+          },
+          {
+            "type": "auth",
+            "properties": {
+              "rules": [
+                {
+                  "allow": "private",
+                  "operations": [
+                    "create",
+                    "update",
+                    "delete",
+                    "read"
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "primaryKeyInfo": {
+          "isCustomPrimaryKey": false,
+          "primaryKeyFieldName": "id",
+          "sortKeyFieldNames": []
+        }
+      },
+      "QChatRequest": {
+        "name": "QChatRequest",
+        "fields": {
+          "id": {
+            "name": "id",
+            "isArray": false,
+            "type": "ID",
+            "isRequired": true,
+            "attributes": []
+          },
+          "customer": {
+            "name": "customer",
+            "isArray": false,
+            "type": "String",
+            "isRequired": true,
+            "attributes": []
+          },
+          "website": {
+            "name": "website",
+            "isArray": false,
+            "type": "AWSURL",
+            "isRequired": true,
+            "attributes": []
+          },
+          "additional_sites": {
+            "name": "additional_sites",
+            "isArray": true,
+            "type": "AWSURL",
+            "isRequired": false,
+            "attributes": [],
+            "isArrayNullable": true
+          },
+          "chatbotname": {
+            "name": "chatbotname",
+            "isArray": false,
+            "type": "String",
+            "isRequired": false,
+            "attributes": []
+          },
+          "chatbot_logo_url": {
+            "name": "chatbot_logo_url",
+            "isArray": false,
+            "type": "String",
+            "isRequired": false,
+            "attributes": []
+          },
+          "initial_text": {
+            "name": "initial_text",
+            "isArray": false,
+            "type": "String",
+            "isRequired": false,
+            "attributes": []
+          },
+          "guardrails": {
+            "name": "guardrails",
+            "isArray": false,
+            "type": "String",
+            "isRequired": false,
+            "attributes": []
+          },
+          "acceptTnC": {
+            "name": "acceptTnC",
+            "isArray": false,
+            "type": "Boolean",
+            "isRequired": true,
+            "attributes": []
+          },
+          "docs": {
+            "name": "docs",
+            "isArray": true,
+            "type": "String",
+            "isRequired": false,
+            "attributes": [],
+            "isArrayNullable": true
+          },
+          "token": {
+            "name": "token",
+            "isArray": false,
+            "type": "String",
+            "isRequired": false,
+            "attributes": []
+          },
+          "bot_status": {
+            "name": "bot_status",
+            "isArray": false,
+            "type": {
+              "enum": "BotStatus"
+            },
+            "isRequired": false,
+            "attributes": []
+          },
+          "qchatform_status": {
+            "name": "qchatform_status",
+            "isArray": false,
+            "type": {
+              "enum": "QchatformStatus"
+            },
+            "isRequired": false,
+            "attributes": []
+          },
+          "regionQ": {
+            "name": "regionQ",
+            "isArray": false,
+            "type": {
+              "enum": "RegionQ"
+            },
+            "isRequired": false,
+            "attributes": []
+          },
+          "expiry_datetime": {
+            "name": "expiry_datetime",
+            "isArray": false,
+            "type": "AWSDateTime",
+            "isRequired": false,
+            "attributes": []
+          },
+          "requester_email": {
+            "name": "requester_email",
+            "isArray": false,
+            "type": "AWSEmail",
+            "isRequired": false,
+            "attributes": []
+          },
+          "applicationIdQ": {
+            "name": "applicationIdQ",
+            "isArray": false,
+            "type": "String",
+            "isRequired": false,
+            "attributes": []
+          },
+          "indexedPages": {
+            "name": "indexedPages",
+            "isArray": false,
+            "type": "String",
+            "isRequired": false,
+            "attributes": []
+          },
+          "createdAt": {
+            "name": "createdAt",
+            "isArray": false,
+            "type": "AWSDateTime",
+            "isRequired": true,
+            "attributes": []
+          },
+          "updatedAt": {
+            "name": "updatedAt",
+            "isArray": false,
+            "type": "AWSDateTime",
+            "isRequired": true,
+            "attributes": []
+          }
+        },
+        "syncable": true,
+        "pluralName": "QChatRequests",
+        "attributes": [
+          {
+            "type": "model",
+            "properties": {}
+          },
+          {
+            "type": "key",
+            "properties": {
+              "fields": [
+                "id"
+              ]
+            }
+          },
+          {
+            "type": "auth",
+            "properties": {
+              "rules": [
+                {
+                  "allow": "private",
+                  "operations": [
+                    "create",
+                    "update",
+                    "delete",
+                    "read"
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "primaryKeyInfo": {
+          "isCustomPrimaryKey": false,
+          "primaryKeyFieldName": "id",
+          "sortKeyFieldNames": []
+        }
+      }
+    },
+    "enums": {
+      "Priority": {
+        "name": "Priority",
+        "values": [
+          "low",
+          "medium",
+          "high"
+        ]
+      },
+      "ScheduleStatus": {
+        "name": "ScheduleStatus",
+        "values": [
+          "Draft",
+          "Scheduled",
+          "Cancelled",
+          "Completed"
+        ]
+      },
+      "RegistrationStatus": {
+        "name": "RegistrationStatus",
+        "values": [
+          "Registered",
+          "OnHold",
+          "Confirmed"
+        ]
+      },
+      "BotStatus": {
+        "name": "BotStatus",
+        "values": [
+          "Active",
+          "Expired",
+          "Disabled"
+        ]
+      },
+      "QchatformStatus": {
+        "name": "QchatformStatus",
+        "values": [
+          "Submitted",
+          "Completed",
+          "Error"
+        ]
+      },
+      "RegionQ": {
+        "name": "RegionQ",
+        "values": [
+          "NORTH_VIRGINIA",
+          "OREGON"
+        ]
+      }
+    },
+    "nonModels": {}
+  },
+  "custom": {
+    "amplifyBackendType": "sandbox",
+    "apiGatewayv2Endpoint": "https://o5sib7u8b8.execute-api.ap-south-1.amazonaws.com",
+    "graphQLAPIId": "m3emfxe4jfgdpdrwm2rds77q7q",
+    "apiExecuteStepFnEndpoint": "https://uoday28py4.execute-api.ap-south-1.amazonaws.com/prod/",
+    "conversationDDBTableName": "amplify-cloudevangelistnextjs-tiwvika-sandbox-2af8a59fed-qChatApiAFD0327D-1IS2RCOBIO748-qChatApichatBRConversationsDDB9BE17D77-1XNQ18SDAI3ZW",
+    "DDBTable_ConversationSummary": "amplify-cloudevangelistnextjs-tiwvika-sandbox-2af8a59fed-qChatApiAFD0327D-1IS2RCOBIO748-qChatApichatBRConversationListDDB6EF9DEF2-1T0MI3C77YG9X"
+  }
+}

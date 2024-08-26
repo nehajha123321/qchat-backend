@@ -1,0 +1,166 @@
+const aws = require('aws-sdk');
+const s3 = new aws.S3();
+const dynamodb = new aws.DynamoDB.DocumentClient();
+const sns = new aws.SNS();
+
+exports.handler = async (event) => {
+    const bucket = event.Records[0].s3.bucket.name;
+    const key = decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, ' '));
+
+    try {
+        const params = { Bucket: bucket, Key: key };
+        const data = await s3.getObject(params).promise();
+        const logs = JSON.parse(data.Body.toString('utf-8'));
+
+        // Analyze logs for anomalies
+        const anomalies = detectAnomalies(logs);
+
+        if (anomalies.length > 0) {
+            await storeAnomalies(anomalies);
+            await sendAlert(anomalies);
+        }
+    } catch (err) {
+        console.error(err);
+        throw new Error(`Error processing log file ${key} from bucket ${bucket}.`);
+    }
+};
+
+function detectAnomalies(logs) {
+    // Implement your anomaly detection logic here
+    const anomalies = [];
+    // Example logic (simple threshold check, replace with actual logic)
+    logs.forEach(log => {
+        if (log.bytes > 100000) {
+            anomalies.push(log);
+        }
+    });
+    return anomalies;
+}
+
+async function storeAnomalies(anomalies) {
+    const params = {
+        TableName: 'VpcFlowLogAnomalies',
+        Item: {
+            id: Date.now().toString(),
+            anomalies: anomalies,
+        },
+    };
+    await dynamodb.put(params).promise();
+}
+
+async function sendAlert(anomalies) {
+    const message = `Detected anomalies in VPC Flow Logs: ${JSON.stringify(anomalies)}`;
+    const params = {
+        Message: message,
+        Subject: 'VPC Flow Log Anomalies Detected',
+        TopicArn: process.env.SNS_TOPIC_ARN,
+    };
+    await sns.publish(params).promise();
+}
+
+const kmeans = require('ml-kmeans'); // Ensure ml-kmeans is installed
+const anomalyDetectionModel = require('./anomalyDetectionModel'); // Assume this is a pre-trained model
+
+function detectAnomalies(logs, historicalData) {
+    const anomalies = new Set();
+
+    // 1. Threshold-Based Detection
+    logs.forEach(log => {
+        if (log.bytes > 100000 || log.packets > 1000) {
+            anomalies.add(log);
+        }
+    });
+
+    // 2. Statistical Analysis
+    const bytesArray = logs.map(log => log.bytes);
+    const mean = bytesArray.reduce((a, b) => a + b, 0) / bytesArray.length;
+    const stdDev = Math.sqrt(bytesArray.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / bytesArray.length);
+    logs.forEach(log => {
+        if (Math.abs(log.bytes - mean) > 3 * stdDev) {
+            anomalies.add(log);
+        }
+    });
+
+    // 3. Time Series Analysis
+    const windowSize = 5;
+    for (let i = windowSize; i < logs.length; i++) {
+        const window = logs.slice(i - windowSize, i);
+        const windowMean = window.reduce((a, b) => a + b.bytes, 0) / windowSize;
+        const windowStdDev = Math.sqrt(window.map(x => Math.pow(x.bytes - windowMean, 2)).reduce((a, b) => a + b) / windowSize);
+        if (Math.abs(logs[i].bytes - windowMean) > 3 * windowStdDev) {
+            anomalies.add(logs[i]);
+        }
+    }
+
+    // 4. Machine Learning Models
+    const mlAnomalies = anomalyDetectionModel.predict(logs);
+    mlAnomalies.forEach(anomaly => anomalies.add(anomaly));
+
+    // 5. Rule-Based Detection
+    logs.forEach(log => {
+        if ((log.destinationPort === 22 && log.bytes > 5000) || (log.sourceIp === '192.168.1.1')) {
+            anomalies.add(log);
+        }
+    });
+
+    // 6. Frequency Analysis
+    const ipFrequency = {};
+    logs.forEach(log => {
+        ipFrequency[log.sourceIp] = (ipFrequency[log.sourceIp] || 0) + 1;
+    });
+    for (const [ip, count] of Object.entries(ipFrequency)) {
+        if (count > 100) { // Arbitrary threshold
+            logs.filter(log => log.sourceIp === ip).forEach(log => anomalies.add(log));
+        }
+    }
+
+    // 7. Correlation Analysis
+    logs.forEach(log => {
+        if (log.destinationPort === 80 && log.bytes > 100000) { // Example correlation rule
+            anomalies.add(log);
+        }
+    });
+
+    // 8. Behavioral Analysis
+    logs.forEach(log => {
+        const similarLogs = historicalData.filter(hLog => hLog.sourceIp === log.sourceIp);
+        if (similarLogs.length) {
+            const mean = similarLogs.reduce((a, b) => a + b.bytes, 0) / similarLogs.length;
+            if (Math.abs(log.bytes - mean) > mean * 0.5) {
+                anomalies.add(log);
+            }
+        }
+    });
+
+    // 9. Clustering Algorithms
+    const data = logs.map(log => [log.bytes, log.packets]);
+    const clusters = kmeans(data, 3); // Assume 3 clusters
+    logs.forEach((log, index) => {
+        if (clusters.clusters[index] === -1) { // -1 indicates outliers
+            anomalies.add(log);
+        }
+    });
+
+    // 10. Log Pattern Matching
+    const knownPatterns = [
+        { destinationPort: 22, bytes: 5000 },
+        { sourceIp: '192.168.1.1' },
+        // Add more patterns here
+    ];
+    logs.forEach(log => {
+        knownPatterns.forEach(pattern => {
+            let match = true;
+            for (const key in pattern) {
+                if (log[key] !== pattern[key]) {
+                    match = false;
+                    break;
+                }
+            }
+            if (match) {
+                anomalies.add(log);
+            }
+        });
+    });
+
+    return Array.from(anomalies);
+}

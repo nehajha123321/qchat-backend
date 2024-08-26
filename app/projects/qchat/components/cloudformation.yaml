@@ -1,0 +1,59 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation template to create an AWS Amplify application for a Next.js project linked with a GitHub repository.
+
+Parameters:
+  GitHubRepo:
+    Description: The URL of the GitHub repository.
+    Type: String
+  GitHubToken:
+    Description: The GitHub personal access token.
+    Type: String
+    NoEcho: true
+
+Resources:
+  AmplifyApp:
+    Type: AWS::Amplify::App
+    Properties:
+      Name: NextJSApp
+      Repository: !Ref GitHubRepo
+      OauthToken: !Ref GitHubToken
+      BuildSpec: |
+        version: 1
+        applications:
+          - frontend:
+              phases:
+                preBuild:
+                  commands:
+                    - npm install
+                build:
+                  commands:
+                    - npm run build
+              artifacts:
+                baseDirectory: .next
+                files:
+                  - '**/*'
+              cache:
+                paths:
+                  - node_modules/**/*
+      EnvironmentVariables:
+        - Name: NODE_ENV
+          Value: production
+
+  AmplifyBranch:
+    Type: AWS::Amplify::Branch
+    Properties:
+      AppId: !Ref AmplifyApp
+      BranchName: main
+      EnableAutoBuild: true
+
+Outputs:
+  AmplifyAppId:
+    Description: The ID of the Amplify App.
+    Value: !Ref AmplifyApp
+  AmplifyBranchUrl:
+    Description: The URL of the Amplify Branch.
+    Value: !Join 
+      - ''
+      - - 'https://'
+        - !Ref AmplifyApp
+        - '.amplifyapp.com'
